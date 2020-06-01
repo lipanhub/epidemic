@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    <link rel="icon" href="/images/logo.png" type="image/x-icon"/>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.js" type="application/javascript"></script>
+</head>
+<body>
+
+<div class="container-fluid main">
+    <span th:text="${user.name}"></span>
+</div>
+</body>
+</html>
