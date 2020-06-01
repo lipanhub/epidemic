@@ -68,6 +68,11 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>5.2.4</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -79,9 +84,9 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>6.1.3</version>
+                <version>5.2.4</version>
                 <configuration>
-                    <url>jdbc:mysql://localhost:3306/epidemic</url>
+                    <url>jdbc:mysql://localhost:3306/epidemic?serverTimezone=UTC</url>
                     <user>root</user>
                     <password>123456</password>
                 </configuration>
