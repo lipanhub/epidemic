@@ -3,6 +3,7 @@
 <head th:fragment="head">
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/css/index.css"/>
     <link rel="icon" href="/images/logo.png" type="image/x-icon"/>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.js" type="application/javascript"></script>
@@ -141,82 +142,108 @@
 </div>
 
 
-<div class="container">
-
-    <div class="row">
-        <div class="col-md-10 ">
-            <h1>健康状况登记</h1>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">健康状况登记</span>
+            </button>
+            <a class="navbar-brand" href="/">健康状况登记</a>
         </div>
-        <div class="col-md-2">
-            <h5 th:text="${user.role}"></h5>
-            <h5><span th:text="${user.name}"></span> <span><a href="/logout">注销</a></span></h5>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <p class="navbar-text navbar-right"></p>
+            <p class="navbar-text navbar-right"><a href="/logout" style="color:red;" class="navbar-link">注销</a></p>
+            <button th:if="${user.role} eq 'ROLE_STUDENT'" id="report_add_modal_btn"
+                    type="button" class="btn btn-info navbar-btn navbar-right">新增健康记录
+            </button>
+            <button th:if="${user.role} eq 'ROLE_ADMIN'" id="teacher_add_modal_btn"
+                    type="button" class="btn btn-info navbar-btn navbar-right">新增教师账号
+            </button>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a>
+                        <span>姓名:</span>
+                        <span th:text="${user.name}" style="color:brown;"></span>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <span>账号类型:</span>
+                        <span th:if="${user.role} eq 'ROLE_STUDENT'" style="color:brown;">学生</span>
+                        <span th:if="${user.role} eq 'ROLE_TEACHER'" style="color:brown;">老师</span>
+                        <span th:if="${user.role} eq 'ROLE_ADMIN'" style="color:brown;">管理员</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
 
-
+<div class="container-fluid main">
     <div class="row">
-        <div class="col-md-4 col-md-offset-11">
-            <button type="button" class="btn btn-success" id="report_add_modal_btn"
-                    th:if="${user.role} eq 'ROLE_STUDENT'">新增
-            </button>
-            <button type="button" class="btn btn-success" id="teacher_add_modal_btn"
-                    th:if="${user.role} eq 'ROLE_ADMIN'">新增教师账号
-            </button>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-hover" id="emps_table">
-
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <table class="table table-condensed table-striped table-hover" id="emps_table">
                 <thead>
                 <tr>
-                    <th>学号</th>
-                    <th>班级</th>
-                    <th>姓名</th>
-                    <th>健康状态</th>
-                    <th>联系方式</th>
-                    <th>备注</th>
-                    <th>创建时间</th>
-                    <th>最后更新时间</th>
+                    <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>#</th>
+                    <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>学号</th>
+                    <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>班级</th>
+                    <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>姓名</th>
+                    <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>健康状态</th>
+                    <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>联系方式</th>
+                    <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>备注</th>
+                    <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>创建时间</th>
+                    <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>最后更新时间</th>
+                    <th rowspan=$rowspan style='vertical-align: middle;text-align: center;'>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="report:${reportList}">
-                    <td th:text="${report.account}"></td>
-                    <td th:text="${report.clazzName}"></td>
-                    <td th:text="${report.name}"></td>
-                    <td th:text="${report.healthStateTitle}"></td>
-                    <td th:text="${report.phone}"></td>
-                    <td th:text="${report.remark}"></td>
-                    <td th:text="${#dates.format(report.gmtCreate, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td th:text="${#dates.format(report.gmtModified, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'
+                        th:text="${report.id}"></td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'
+                        th:text="${report.account}"></td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'
+                        th:text="${report.clazzName}"></td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'
+                        th:text="${report.name}"></td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'
+                        th:text="${report.healthStateTitle}"></td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'
+                        th:text="${report.phone}"></td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'
+                        th:text="${report.remark}"></td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'
+                        th:text="${#dates.format(report.gmtCreate, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'
+                        th:text="${#dates.format(report.gmtModified, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td rowspan=$rowspan style='vertical-align: middle;text-align: center;'>
                         <button class="btn btn-sm btn-primary edit_btn" th:attr="edit_id=${report.id}">
-                            <span class="glyphicon glyphicon-pencil"></span>编辑
+                            <span class="glyphicon glyphicon-pencil"></span> 编辑
                         </button>
                         <a th:href="@{'/report/del/'+ ${report.id}}">
                             <button class="btn btn-sm btn-danger delete_btn">
-                                <span class="glyphicon glyphicon-trash"></span>删除
+                                <span class="glyphicon glyphicon-trash"></span> 删除
                             </button>
                         </a>
                     </td>
                 </tr>
                 </tbody>
-
             </table>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-6" id="page_msg_area">
-        </div>
-        <div class="col-md-6">
-            <nav aria-label="Page navigation" id="page_nav">
-            </nav>
-        </div>
-    </div>
 </div>
+<div class="footer">
+    Copyright © 2020
+    · 华南农业大学17级网络工程3班
+    · <span style="color: #d43f3a">李攀</span>
+    · <span style="color: orange">叶振涛</span>
+    · <span style="color: blue">孙裕康</span>
+    · <span style="color: deeppink">唐嘉维</span>
+    · 数据库分析与设计实习
+</div>
+
 <script>
     function resetForm(ele) {
         $(ele)[0].reset();
