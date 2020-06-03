@@ -1,15 +1,13 @@
 package fun.lipan.epidemic.controller;
 
+import fun.lipan.epidemic.dto.ReportDto;
 import fun.lipan.epidemic.entity.User;
-import fun.lipan.epidemic.service.UserService;
+import fun.lipan.epidemic.service.ReportService;
+import fun.lipan.epidemic.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -22,18 +20,19 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private UserService userService;
+    private ReportService reportService;
 
-    @GetMapping("/")
-    public String index(Model model) {
-        User user = userService.findById("1");
-        model.addAttribute("user", user);
-        return "index";
+    @RequestMapping("/")
+    public String defaultPage() {
+        return "redirect:index";
     }
 
-    @RequestMapping("/whoim")
-    @ResponseBody
-    public Object whoIm() {
-        return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @RequestMapping("/index")
+    public String index(Model model) {
+        User user = UserUtil.getLoginUser();
+        model.addAttribute("user", user);
+        List<ReportDto> reportList = reportService.findByUserRole(user);
+        model.addAttribute("reportList", reportList);
+        return "index";
     }
 }

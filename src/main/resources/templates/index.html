@@ -8,9 +8,289 @@
     <script src="/js/bootstrap.js" type="application/javascript"></script>
 </head>
 <body>
+<!-- 添加健康状况模态框 -->
+<div class="modal fade" id="reportAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">添加</h4>
+            </div>
+            <div class="modal-body">
+                <form action="/report" class="form-horizontal" method="post">
+                    <div class="form-group">
+                        <label for="report_add_select" class="col-sm-2 control-label">健康状况</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="healthState" id="report_add_select">
 
-<div class="container-fluid main">
-    <span th:text="${user.name}"></span>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="report_remark_input" class="col-sm-2 control-label">备注信息</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="remark" id="report_remark_input">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- 修改健康状况模态框 -->
+<div class="modal fade" id="reportUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">编辑</h4>
+            </div>
+            <div class="modal-body">
+                <form action="/report/update" class="form-horizontal" method="post">
+                    <input type="hidden" name="id" id="report_update_id">
+                    <div class="form-group">
+                        <label for="report_add_select" class="col-sm-2 control-label">健康状况</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="healthState" id="report_update_select">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="report_update_remark_input" class="col-sm-2 control-label">备注信息</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="remark" id="report_update_remark_input">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加教师账号模态框 -->
+<div class="modal fade" id="teacherAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">添加教师账号</h4>
+            </div>
+            <div class="modal-body">
+                <form action="/register" class="form-horizontal" method="post">
+                    <input type="hidden" name="roleId" value="2">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="text" name="username" class="form-control" placeholder="工 号">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="password" name="password" class="form-control" placeholder="密　码">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="text" name="name" class="form-control" id="inputName3" placeholder="姓 名">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="text" name="home" class="form-control" id="inputHome3" placeholder="家 庭 住 址">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="text" name="phone" class="form-control" id="inputPhone3" placeholder="手 机 号 码">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <select class="form-control" name="clazzId" id="teacher_add_select">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-10 ">
+            <h1>健康状况登记</h1>
+        </div>
+        <div class="col-md-2">
+            <h5 th:text="${user.role}"></h5>
+            <h5><span th:text="${user.name}"></span> <span><a href="/logout">注销</a></span></h5>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4 col-md-offset-11">
+            <button type="button" class="btn btn-success" id="report_add_modal_btn"
+                    th:if="${user.role} eq 'ROLE_STUDENT'">新增
+            </button>
+            <button type="button" class="btn btn-success" id="teacher_add_modal_btn"
+                    th:if="${user.role} eq 'ROLE_ADMIN'">新增教师账号
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover" id="emps_table">
+
+                <thead>
+                <tr>
+                    <th>学号</th>
+                    <th>班级</th>
+                    <th>姓名</th>
+                    <th>健康状态</th>
+                    <th>联系方式</th>
+                    <th>备注</th>
+                    <th>创建时间</th>
+                    <th>最后更新时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="report:${reportList}">
+                    <td th:text="${report.account}"></td>
+                    <td th:text="${report.clazzName}"></td>
+                    <td th:text="${report.name}"></td>
+                    <td th:text="${report.healthStateTitle}"></td>
+                    <td th:text="${report.phone}"></td>
+                    <td th:text="${report.remark}"></td>
+                    <td th:text="${#dates.format(report.gmtCreate, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${#dates.format(report.gmtModified, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td>
+                        <button class="btn btn-sm btn-primary edit_btn" th:attr="edit_id=${report.id}">
+                            <span class="glyphicon glyphicon-pencil"></span>编辑
+                        </button>
+                        <a th:href="@{'/report/del/'+ ${report.id}}">
+                            <button class="btn btn-sm btn-danger delete_btn">
+                                <span class="glyphicon glyphicon-trash"></span>删除
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6" id="page_msg_area">
+        </div>
+        <div class="col-md-6">
+            <nav aria-label="Page navigation" id="page_nav">
+            </nav>
+        </div>
+    </div>
+</div>
+<script>
+    function resetForm(ele) {
+        $(ele)[0].reset();
+        $(ele).find("*").removeClass("has-error has-success");
+        $(ele).find(".help-block").text("");
+    }
+
+    function loadHealthState(ele) {
+        $(ele).empty();
+        $.ajax({
+            url: "/health",
+            type: "GET",
+            success: function (result) {
+                var healthStates = result.healthStateList;
+                $.each(healthStates, function (index, healthState) {
+                    var option = $("<option></option>").attr("value", healthState.id).append(healthState.state);
+                    $(ele).append(option);
+                });
+            }
+        });
+    }
+
+    $("#report_add_modal_btn").click(function () {
+        resetForm("#reportAddModal form");
+        loadHealthState("#report_add_select");
+        $("#reportAddModal").modal({
+            backdrop: "static"
+        });
+    });
+
+    $(document).on("click", ".edit_btn", function () {
+        $("#report_update_id").attr("value", $(this).attr("edit_id"));
+        resetForm("#reportUpdateModal form");
+        loadHealthState("#report_update_select");
+        $("#reportUpdateModal").modal({
+            backdrop: "static"
+        });
+        loadReport($(this).attr("edit_id"));
+    });
+
+    function loadReport(id) {
+        $.ajax({
+            url: "/report/" + id,
+            type: "GET",
+            success: function (result) {
+                var report = result.report;
+                $("#report_update_remark_input").val(report.remark);
+                $("#reportUpdateModal select").val([report.healthState]);
+            }
+        });
+    }
+
+    $("#teacher_add_modal_btn").click(function () {
+        resetForm("#teacherAddModal form");
+        loadClazz("#teacher_add_select");
+        $("#teacherAddModal").modal({
+            backdrop: "static"
+        });
+    });
+
+    function loadClazz(ele) {
+        $(ele).empty();
+        $.ajax({
+            url: "/clazz",
+            type: "GET",
+            success: function (result) {
+                var clazzes = result.clazzList;
+                $.each(clazzes, function (index, clazz) {
+                    var option = $("<option></option>").attr("value", clazz.id).append(clazz.clazzName);
+                    $(ele).append(option);
+                });
+            }
+        });
+    }
+</script>
 </body>
 </html>

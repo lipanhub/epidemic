@@ -24,14 +24,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().loginPage("/login").loginProcessingUrl("/login/form")
+        http.authorizeRequests().antMatchers("/register","/css/**","/font/**","/images/**","/js/**").permitAll()
+                .and().formLogin().loginPage("/login").loginProcessingUrl("/login/form")
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(myAuthenticationFailHander)
-                .permitAll()  //表单登录，permitAll()表示这个不需要验证 登录页面，登录失败页面
-                .and()
-                .authorizeRequests().anyRequest().authenticated()
+                .permitAll()
+                .and().authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/whoim").hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .csrf().disable();
+        http.logout().logoutSuccessUrl("/login");
     }
 
     @Override
