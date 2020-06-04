@@ -41,7 +41,7 @@ public class RegisterController {
             userService.addOne(user);
         }
         if (user.getRoleId() == 1){
-            return "/login";
+            return "redirect:login";
         }else{
             return "redirect:index";
         }
