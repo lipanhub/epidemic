@@ -30,5 +30,4 @@ public class ClazzController {
         res.put("clazzList",clazzList);
         return res;
     }
-
 }
